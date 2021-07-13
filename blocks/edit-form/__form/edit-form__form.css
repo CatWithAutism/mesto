@@ -10,3 +10,10 @@
     display: flex;
     flex-direction: column;
 }
+
+@media screen and (max-width: 768px) {
+    .edit-form__form {
+        width: 282px;
+        height: 322px;
+    }
+}

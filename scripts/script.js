@@ -1,9 +1,13 @@
-document.querySelector('.edit-form__form').addEventListener("submit", onSubmitForm);
-document.querySelector('.edit-form__closing-button').addEventListener("click", onCloseForm);
-document.querySelector('.profile__edit-button').addEventListener('click', onEditProfileData);
-document.querySelectorAll('.pictures__like').forEach(t => {
-    t.addEventListener('click', onLike);
-})
+addEventListening();
+
+function addEventListening() {
+    document.querySelector('.edit-form__form').addEventListener("submit", onSubmitForm);
+    document.querySelector('.edit-form__closing-button').addEventListener("click", onCloseForm);
+    document.querySelector('.profile__edit-button').addEventListener('click', onEditProfileData);
+    document.querySelectorAll('.pictures__like').forEach(t => {
+        t.addEventListener('click', onLike);
+    })
+}
 
 function onSubmitForm(event) {
     event.preventDefault();
@@ -29,6 +33,8 @@ function onCloseForm(event) {
 
 function onEditProfileData(event) {
     event.preventDefault();
+    document.querySelector('#name').value = document.querySelector('.profile__title').innerText;
+    document.querySelector('#title').value = document.querySelector('.profile__subtitle').innerText;
     document.querySelector('.edit-form').classList.add("edit-form_active");
 }
 

@@ -21,3 +21,9 @@
 .edit-form__input-field:first-of-type {
     margin-top: 54px;
 }
+
+@media screen and (max-width: 768px) {
+    .edit-form__input-field:first-of-type {
+        margin-top: 75px;
+    }
+}

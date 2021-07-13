@@ -21,7 +21,6 @@
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__sign/footer__sign.css);
 @import url(../blocks/edit-form/edit-form.css);
-@import url(../blocks/edit-form/__data-container/edit-form__data-container.css);
 @import url(../blocks/edit-form/__form/edit-form__form.css);
 @import url(../blocks/edit-form/__closing-button/edit-form__closing-button.css);
 @import url(../blocks/edit-form/__input-field/edit-form__input-field.css);

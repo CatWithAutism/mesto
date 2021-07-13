@@ -12,3 +12,11 @@
     line-height: 29px;
     color: #000000;
 }
+
+@media screen and (max-width: 768px) {
+    .edit-form__title {
+        font-size: 18px;
+        line-height: 22px;
+        margin-top: 25px;
+    }
+}
