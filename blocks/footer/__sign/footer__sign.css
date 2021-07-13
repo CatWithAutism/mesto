@@ -1,4 +1,4 @@
-.footer_sign {
+.footer__sign {
     font-style: normal;
     font-weight: normal;
     font-size: 18px;
@@ -7,7 +7,7 @@
 }
 
 @media screen and (max-width: 425px) {
-    .footer_sign {
+    .footer__sign {
         font-size: 14px;
         line-height: 17px;
     }
