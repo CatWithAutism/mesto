@@ -6,7 +6,7 @@
     color: #FFFFFF;
     margin-top: 0;
     margin-bottom: 0;
-    max-width: 300px;
+    max-width: 294px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -16,7 +16,6 @@
     .profile__subtitle {
         max-width: 189px;
         grid-column: 2;
-        font-weight: normal;
         font-size: 14px;
         line-height: 17px;
         margin-left: auto;

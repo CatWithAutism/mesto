@@ -8,7 +8,7 @@
     line-height: 48px;
     text-align: center;
     color: #FFFFFF;
-    max-width: 300px;
+    max-width: 294px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -19,7 +19,6 @@
     .profile__title {
         max-width: 189px;
         grid-column: 2;
-        font-weight: 500;
         font-size: 27px;
         line-height: 33px;
     }

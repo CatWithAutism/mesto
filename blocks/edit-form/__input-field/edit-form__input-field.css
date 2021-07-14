@@ -1,6 +1,6 @@
 .edit-form__input-field {
     border: 0;
-    border-bottom: 1px solid rgba(84, 84, 84, .2);
+    border-bottom: 1px solid rgba(0, 0, 0, .2);
     background-color: transparent;
     width: 84%;
     /* это специально, чтобы оно было адаптивным и ПОЧТИ сходилось на макетах :) */
@@ -9,17 +9,17 @@
     padding: 0 0 0 0;
     padding-bottom: 13px;
     outline: none;
-    font-family: Inter;
+    font-family: Inter, Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 14px;
     line-height: 17px;
     color: #000000;
-    margin-top: 30px;
+    margin-top: 25px;
 }
 
 .edit-form__input-field:first-of-type {
-    margin-top: 54px;
+    margin-top: 49px;
 }
 
 @media screen and (max-width: 768px) {

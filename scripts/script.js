@@ -1,44 +1,29 @@
-addEventListening();
+document.querySelector('.edit-form').addEventListener("submit", onSubmitForm);
+document.querySelector('.popup__closing-button').addEventListener("click", onCloseForm);
+document.querySelector('.profile__edit-button').addEventListener('click', onEditProfileData);
 
-function addEventListening() {
-    document.querySelector('.edit-form__form').addEventListener("submit", onSubmitForm);
-    document.querySelector('.edit-form__closing-button').addEventListener("click", onCloseForm);
-    document.querySelector('.profile__edit-button').addEventListener('click', onEditProfileData);
-    document.querySelectorAll('.pictures__like').forEach(t => {
-        t.addEventListener('click', onLike);
-    })
-}
+const formNameElement = document.querySelector('#name');
+const formTitleElement = document.querySelector('#title');
+const editFormElement = document.querySelector('.popup');
+const profileTitleElement = document.querySelector('.profile__title');
+const profileSubTitleElement = document.querySelector('.profile__subtitle');
+
 
 function onSubmitForm(event) {
     event.preventDefault();
-    let name = document.getElementById('name').value;
-    let title = document.getElementById('title').value;
-    setProfileData(name, title);
-}
-
-function onLike(event) {
-    event.preventDefault();
-    const activeClass = 'pictures__like_active';
-    if (event.target.classList.contains(activeClass)) {
-        event.target.classList.remove(activeClass);
-    } else {
-        event.target.classList.add(activeClass)
-    }
+    profileTitleElement.textContent = formNameElement.value.trim();
+    profileSubTitleElement.textContent = formTitleElement.value.trim();
+    editFormElement.classList.remove("popup_opened");
 }
 
 function onCloseForm(event) {
     event.preventDefault();
-    document.querySelector('.edit-form').classList.remove("edit-form_active");
+    editFormElement.classList.remove("popup_opened");
 }
 
 function onEditProfileData(event) {
     event.preventDefault();
-    document.querySelector('#name').value = document.querySelector('.profile__title').innerText;
-    document.querySelector('#title').value = document.querySelector('.profile__subtitle').innerText;
-    document.querySelector('.edit-form').classList.add("edit-form_active");
-}
-
-function setProfileData(name, title) {
-    document.querySelector('.profile__title').innerHTML = name.trim();
-    document.querySelector('.profile__subtitle').innerHTML = title.trim();
+    formNameElement.value = profileTitleElement.textContent;
+    formTitleElement.value = profileSubTitleElement.textContent;
+    editFormElement.classList.add("popup_opened");
 }
