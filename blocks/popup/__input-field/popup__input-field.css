@@ -1,4 +1,4 @@
-.edit-form__input-field {
+.popup__input-field {
     border: 0;
     border-bottom: 1px solid rgba(0, 0, 0, .2);
     background-color: transparent;
@@ -18,12 +18,12 @@
     margin-top: 25px;
 }
 
-.edit-form__input-field:first-of-type {
+.popup__input-field:first-of-type {
     margin-top: 49px;
 }
 
 @media screen and (max-width: 768px) {
-    .edit-form__input-field:first-of-type {
+    .popup__input-field:first-of-type {
         margin-top: 75px;
     }
 }

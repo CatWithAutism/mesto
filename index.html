@@ -84,13 +84,14 @@
         </footer>
     </div>
     <div class="popup">
+        <button class="popup__closing-button" type="button"></button>
+        <!-- из-за того что она сделана на гриде, то я ее расположил за контейнером. Она меняется все равно не будет(наверное)-->
         <div class="popup__container">
-            <button class="popup__closing-button" type="button"></button>
-            <form class="edit-form" name="profileDataForm">
-                <h2 class="edit-form__title">Редактировать профиль</h2>
-                <input id="name" name="newName" type="text" class="edit-form__input-field">
-                <input id="title" name="newTitle" type="text" class="edit-form__input-field">
-                <button class="edit-form__submit-button" type="submit">Сохранить</button>
+            <h2 class="popup__title">Редактировать профиль</h2>
+            <form class="popup__form" name="profileDataForm">
+                <input id="name" name="newName" type="text" class="popup__input-field">
+                <input id="title" name="newTitle" type="text" class="popup__input-field">
+                <button class="popup__submit-button" type="submit">Сохранить</button>
             </form>
         </div>
     </div>
