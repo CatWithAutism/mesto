@@ -8,6 +8,8 @@ const picturesElement = document.querySelector('.pictures');
 const popupContainer = document.querySelector('.popup__container');
 const addPictureButton = document.querySelector('.profile__add-button');
 
+//https://cs8.pikabu.ru/images/big_size_comm/2016-02_1/1454547854141668474.jpg
+
 const initialCards = [{
         name: 'Архыз',
         link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
