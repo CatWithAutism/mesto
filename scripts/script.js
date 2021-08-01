@@ -24,18 +24,29 @@ const initialCards = [{
     }
 ];
 
-const popup = document.querySelector('.popup');
 const popupProfile = document.querySelector('#popupProfile');
 const popupPicture = document.querySelector('#popupPicture');
 const popupAddPicture = document.querySelector('#popupAddPicture');
-
-const popupClosingButton = document.querySelector('.popup__closing-button');
-const profileEditButton = document.querySelector('.profile__edit-button');
+const editProfileDataButton = document.querySelector('.profile__edit-button');
 const addPictureButton = document.querySelector('.profile__add-button');
+const popupProfileNameElement = popupProfile.querySelector('#name');
+const popupProfileTitleElement = popupProfile.querySelector('#title');
+const profileTitleElement = document.querySelector('.profile__title');
+const profileSubTitleElement = document.querySelector('.profile__subtitle');
+const popupProfileForm = popupProfile.querySelector('.popup__form');
+const popupPictureElement = popupPicture.querySelector('.popup__picture');
+const popupSubtitleElement = popupPicture.querySelector('.popup__subtitle');
+const popupAddPictureForm = popupAddPicture.querySelector('.popup__form');
 
-popupClosingButton.addEventListener("click", onCloseForm);
-profileEditButton.addEventListener('click', onEditProfileData);
+//больше нигде не используется
+document.querySelectorAll('.popup__closing-button').forEach(t => {
+    t.addEventListener('click', onClosePopup);
+});
+editProfileDataButton.addEventListener('click', onEditProfileData);
 addPictureButton.addEventListener('click', onAddPicture);
+popupProfileForm.addEventListener('submit', onProfileEditSubmit);
+popupAddPictureForm.addEventListener('submit', onAddNewPictureSubmit);
+
 
 drawPictures(...initialCards);
 
@@ -44,10 +55,11 @@ function drawPictures(...args) {
     const pictureTemplate = document.querySelector('#pictureTemplate').content;
 
     args.forEach(t => {
-        let rawPictureElement = pictureTemplate.querySelector('.pictures__element').cloneNode(true);
-        let picture = rawPictureElement.querySelector('.pictures__picture');
+        const rawPictureElement = pictureTemplate.querySelector('.pictures__element').cloneNode(true);
+        const picture = rawPictureElement.querySelector('.pictures__picture');
 
         picture.setAttribute('src', t.link);
+        picture.setAttribute('alt', t.name);
         rawPictureElement.querySelector('.pictures__title').textContent = t.name;
         rawPictureElement.querySelector('.pictures__like').addEventListener('click', onLike);
         rawPictureElement.querySelector('.pictures__remove-button').addEventListener('click', onRemovePicture);
@@ -56,10 +68,17 @@ function drawPictures(...args) {
     });
 }
 
-//#region Common
+function openPopup(popup) {
+    popup.classList.add('popup_opened');
+}
+
+function closePopup(popup) {
+    popup.classList.remove('popup_opened');
+}
 
 function onLike(event) {
     event.preventDefault();
+    //а это вообще можно было через радиобаттон сделать, но и так вродь ок
     const activeClass = 'pictures__like_active';
     if (event.target.classList.contains(activeClass)) {
         event.target.classList.remove(activeClass);
@@ -68,21 +87,19 @@ function onLike(event) {
     }
 }
 
-//#endregion Common
-
-//#region popupAddPicture
-const popupAddPictureForm = popupAddPicture.querySelector('.popup__form');
-popupAddPictureForm.addEventListener('submit', onAddNewPictureSubmit);
-
-function onAddPicture(event) {
+function onClosePopup(event) {
     event.preventDefault();
-    popup.className = 'popup popup_opened';
-    popupAddPicture.classList.add('popup__container_opened');
+    closePopup(event.target.parentElement);
 }
 
 function onRemovePicture(event) {
     event.preventDefault();
     event.target.parentElement.remove();
+}
+
+function onAddPicture(event) {
+    event.preventDefault();
+    openPopup(popupAddPicture);
 }
 
 function onAddNewPictureSubmit(event) {
@@ -98,47 +115,26 @@ function onAddNewPictureSubmit(event) {
     addPictureTitleElement.value = '';
     addPictureUrlElement.value = '';
 
-    onCloseForm(event)
+    closePopup(popupAddPicture)
 }
-
-//#endregion popupAddPicture
-
-//#region popupShowPicture
-
-const popupPictureElement = popupPicture.querySelector('.popup__picture');
-const popupSubtitleElement = popupPicture.querySelector('.popup__subtitle');
 
 function onPictureClick(event) {
     event.preventDefault();
 
-    let title = event.target.parentElement.querySelector('.pictures__title').textContent;
+    const title = event.target.parentElement.querySelector('.pictures__title').textContent;
 
     popupPictureElement.setAttribute('src', event.target.getAttribute('src'));
     popupPictureElement.setAttribute('alt', title)
     popupSubtitleElement.textContent = title;
 
-    popup.className = 'popup popup_opened';
-    popupPicture.classList.add('popup__container_large', 'popup__container_opened');
+    openPopup(popupPicture);
 }
-
-//#endregion popupShowPicture
-
-
-
-//#region profilePopup
-
-const popupProfileNameElement = popupProfile.querySelector('#name');
-const popupProfileTitleElement = popupProfile.querySelector('#title');
-const profileTitleElement = document.querySelector('.profile__title');
-const profileSubTitleElement = document.querySelector('.profile__subtitle');
-const popupProfileForm = popupProfile.querySelector('.popup__form');
-popupProfileForm.addEventListener('submit', onProfileEditSubmit);
 
 function onProfileEditSubmit(event) {
     event.preventDefault();
     profileTitleElement.textContent = popupProfileNameElement.value.trim();
     profileSubTitleElement.textContent = popupProfileTitleElement.value.trim();
-    onCloseForm(event)
+    closePopup(popupProfile);
 }
 
 function onEditProfileData(event) {
@@ -146,40 +142,5 @@ function onEditProfileData(event) {
 
     popupProfileNameElement.value = profileTitleElement.textContent;
     popupProfileTitleElement.value = profileSubTitleElement.textContent;
-
-    popup.className = 'popup popup_opened';
-    popupProfile.classList.add('popup__container_opened');
+    openPopup(popupProfile);
 }
-
-//#endregion profilePopup
-
-
-//#region commonPopup
-
-function onCloseForm(event) {
-    event.preventDefault();
-    popup.className = 'popup popup_closed';
-
-    /*
-        Это чистокровный костыль, который нужен, чтобы окно грида становилось меньше из-за 1fr max-content 1fr
-        Картинка его увеличивает
-        Если таймера не будет, то при закрытии картинка будет срезаться по сурсам и будет все очень плохо
-        Тут нужен либо display: none либо src=''
-        Но из-за анимации display: none недоступен, а работа уже сделана на гридах
-        Выбора не было особо :(
-        Точнее он есть всегда
-        Называется три разных попапа
-        Но кто я такой чтобы идти легким путем?
-        Да?
-    */
-    setTimeout(() => {
-        const popupClass = 'popup__container';
-        popupAddPicture.className = popupClass;
-        popupProfile.className = popupClass;
-        popupPicture.className = popupClass;
-        popupPictureElement.setAttribute('src', '');
-    }, 500);
-
-}
-
-//#endregion commonPopup
