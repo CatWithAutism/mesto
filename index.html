@@ -36,9 +36,37 @@
     </div>
     <div class="popup">
         <button class="popup__closing-button" type="button"></button>
-        <div class="popup__container">
+        <div id="popupPicture" class="popup__container">
+            <img class="popup__picture" src="" alt="">
+            <p class="popup__subtitle"></p>
+        </div>
+        <div id="popupProfile" class="popup__container">
+            <h2 class="popup__title">Редактировать профиль</h2>
+            <form class="popup__form" name="profileDataForm">
+                <input id="name" name="newName" type="text" class="popup__input-field">
+                <input id="title" name="newTitle" type="text" class="popup__input-field">
+                <button class="popup__submit-button" type="submit">Сохранить</button>
+            </form>
+        </div>
+        <div id="popupAddPicture" class="popup__container">
+            <h2 class="popup__title">Новое место</h2>
+            <form class="popup__form" name="profileDataForm">
+                <input id="title" name="newTitle" type="text" class="popup__input-field" placeholder="Название">
+                <input id="url" name="newUrl" type="text" class="popup__input-field" placeholder="Ссылка на картинку">
+                <button class="popup__submit-button" type="submit">Создать</button>
+            </form>
         </div>
     </div>
+    <template id="pictureTemplate">
+        <div class="pictures__element">
+            <img src="" class="pictures__picture" alt="">
+            <div class="pictures__info">
+                <h3 class="pictures__title"></h3>
+                <button class="pictures__like" type="button"></button>
+            </div>
+            <button class="pictures__remove-button" type="button"></button>
+        </div>
+    </template>
     <script src="./scripts/script.js"></script>
 </body>
 
