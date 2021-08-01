@@ -44,12 +44,14 @@ function drawPictures(...args) {
     const pictureTemplate = document.querySelector('#pictureTemplate').content;
 
     args.forEach(t => {
-        let rawPictureElement = pictureTemplate.cloneNode(true);
-        rawPictureElement.querySelector('.pictures__picture').setAttribute('src', t.link);
+        let rawPictureElement = pictureTemplate.querySelector('.pictures__element').cloneNode(true);
+        let picture = rawPictureElement.querySelector('.pictures__picture');
+
+        picture.setAttribute('src', t.link);
         rawPictureElement.querySelector('.pictures__title').textContent = t.name;
         rawPictureElement.querySelector('.pictures__like').addEventListener('click', onLike);
         rawPictureElement.querySelector('.pictures__remove-button').addEventListener('click', onRemovePicture);
-        rawPictureElement.querySelector('.pictures__picture').addEventListener('click', onPictureClick);
+        picture.addEventListener('click', onPictureClick);
         pictures.prepend(rawPictureElement);
     });
 }
@@ -74,7 +76,7 @@ popupAddPictureForm.addEventListener('submit', onAddNewPictureSubmit);
 
 function onAddPicture(event) {
     event.preventDefault();
-    popup.classList.add("popup_opened");
+    popup.className = 'popup popup_opened';
     popupAddPicture.classList.add('popup__container_opened');
 }
 
@@ -115,7 +117,7 @@ function onPictureClick(event) {
     popupPictureElement.setAttribute('alt', title)
     popupSubtitleElement.textContent = title;
 
-    popup.classList.add('popup_opened');
+    popup.className = 'popup popup_opened';
     popupPicture.classList.add('popup__container_large', 'popup__container_opened');
 }
 
@@ -145,7 +147,7 @@ function onEditProfileData(event) {
     popupProfileNameElement.value = profileTitleElement.textContent;
     popupProfileTitleElement.value = profileSubTitleElement.textContent;
 
-    popup.classList.add("popup_opened");
+    popup.className = 'popup popup_opened';
     popupProfile.classList.add('popup__container_opened');
 }
 
@@ -156,14 +158,24 @@ function onEditProfileData(event) {
 
 function onCloseForm(event) {
     event.preventDefault();
-    const popup__container = 'popup__container';
+    popup.className = 'popup popup_closed';
 
-    popup.classList.remove("popup_opened");
-    popupAddPicture.className = popup__container;
-    popupProfile.className = popup__container;
-    popupPicture.className = popup__container;
-    popupPictureElement.setAttribute('src', '');
-    popupSubtitleElement.textContent = '';
+    /*
+        Это чистокровный костыль, который нужен, чтобы окно грида становилось меньше из-за 1fr max-content 1fr
+        Картинка его увеличивает
+        Если таймера не будет, то при закрытии картинка будет срезаться по сурсам и будет все очень плохо
+        Тут нужен либо display: none либо src=''
+        Но из-за анимации display: none недоступен, а работа уже сделана на гридах
+        Выбора не было особо :(
+    */
+    setTimeout(() => {
+        const popupClass = 'popup__container';
+        popupAddPicture.className = popupClass;
+        popupProfile.className = popupClass;
+        popupPicture.className = popupClass;
+        popupPictureElement.setAttribute('src', '');
+    }, 500);
+
 }
 
 //#endregion commonPopup
