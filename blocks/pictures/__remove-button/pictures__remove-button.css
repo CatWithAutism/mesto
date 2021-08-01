@@ -10,9 +10,9 @@
     position: absolute;
     background-color: transparent;
     cursor: pointer;
-    opacity: 0.5;
+    opacity: 1;
 }
 
 .pictures__remove-button:hover {
-    opacity: 1;
+    opacity: 0.5;
 }
