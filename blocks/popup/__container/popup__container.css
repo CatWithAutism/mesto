@@ -1,5 +1,5 @@
 .popup__container {
-    visibility: hidden;
+    display: none;
     background-color: white;
     width: 430px;
     grid-column: 2;

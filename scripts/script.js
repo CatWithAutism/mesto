@@ -85,7 +85,7 @@ function onRemovePicture(event) {
 
 function onAddNewPictureSubmit(event) {
     event.preventDefault();
-    const addPictureTitleElement = popupAddPicture.querySelector('#title');
+    const addPictureTitleElement = popupAddPicture.querySelector('#pictureTitle');
     const addPictureUrlElement = popupAddPicture.querySelector('#url');
 
     drawPictures({
@@ -109,8 +109,11 @@ const popupSubtitleElement = popupPicture.querySelector('.popup__subtitle');
 function onPictureClick(event) {
     event.preventDefault();
 
+    let title = event.target.parentElement.querySelector('.pictures__title').textContent;
+
     popupPictureElement.setAttribute('src', event.target.getAttribute('src'));
-    popupSubtitleElement.textContent = event.target.parentElement.querySelector('.pictures__title').textContent;
+    popupPictureElement.setAttribute('alt', title)
+    popupSubtitleElement.textContent = title;
 
     popup.classList.add('popup_opened');
     popupPicture.classList.add('popup__container_large', 'popup__container_opened');
