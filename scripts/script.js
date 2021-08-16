@@ -1,27 +1,27 @@
 const initialCards = [{
-        name: 'Архыз',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-        name: 'Я сделаль',
-        link: 'https://cs8.pikabu.ru/images/big_size_comm/2016-02_1/1454547854141668474.jpg'
-    },
-    {
-        name: 'Иваново',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-        name: 'Камчатка',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-        name: 'Холмогорский район',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-        name: 'Байкал',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+},
+{
+    name: 'Я сделаль',
+    link: 'https://cs8.pikabu.ru/images/big_size_comm/2016-02_1/1454547854141668474.jpg'
+},
+{
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+},
+{
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+},
+{
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+},
+{
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+}
 ];
 
 const popupProfile = document.querySelector('#popupProfile');
@@ -42,11 +42,16 @@ const popupAddPictureForm = popupAddPicture.querySelector('.popup__form');
 document.querySelectorAll('.popup__closing-button').forEach(t => {
     t.addEventListener('click', onClosePopup);
 });
+document.querySelectorAll('.popup__container').forEach(t => {
+    t.addEventListener('click', onClickPopupContainer);
+});
 editProfileDataButton.addEventListener('click', onEditProfileData);
 addPictureButton.addEventListener('click', onAddPicture);
 popupProfileForm.addEventListener('submit', onProfileEditSubmit);
 popupAddPictureForm.addEventListener('submit', onAddNewPictureSubmit);
-
+popupProfile.addEventListener('click', onClosePopup);
+popupPicture.addEventListener('click', onClosePopup);
+popupAddPicture.addEventListener('click', onClosePopup);
 
 drawPictures(...initialCards);
 
@@ -70,15 +75,27 @@ function drawPictures(...args) {
 
 function openPopup(popup) {
     popup.classList.add('popup_opened');
+    document.addEventListener("keydown", onKeydown);
 }
 
 function closePopup(popup) {
     popup.classList.remove('popup_opened');
+    document.removeEventListener("keydown", onKeydown);
 }
+
+//https://stackoverflow.com/questions/1369035/how-do-i-prevent-a-parents-onclick-event-from-firing-when-a-child-anchor-is-cli?rq=1
+function onClickPopupContainer(event) {
+    event.stopPropagation();
+}
+
+function onKeydown(evt) {
+    if (evt.key === "Escape") {
+        closePopup(document.querySelector(".popup_opened"));
+    }
+};
 
 function onLike(event) {
     event.preventDefault();
-    //а это вообще можно было через радиобаттон сделать, но и так вродь ок
     const activeClass = 'pictures__like_active';
     if (event.target.classList.contains(activeClass)) {
         event.target.classList.remove(activeClass);
@@ -89,7 +106,7 @@ function onLike(event) {
 
 function onClosePopup(event) {
     event.preventDefault();
-    closePopup(event.target.parentElement);
+    closePopup(event.target.closest(".popup"));
 }
 
 function onRemovePicture(event) {
@@ -112,8 +129,7 @@ function onAddNewPictureSubmit(event) {
         link: addPictureUrlElement.value.trim()
     });
 
-    addPictureTitleElement.value = '';
-    addPictureUrlElement.value = '';
+    popupAddPictureForm.reset();
 
     closePopup(popupAddPicture)
 }
@@ -142,5 +158,8 @@ function onEditProfileData(event) {
 
     popupProfileNameElement.value = profileTitleElement.textContent;
     popupProfileTitleElement.value = profileSubTitleElement.textContent;
+
+    popupProfileNameElement.dispatchEvent(new Event('input'));
+    popupProfileTitleElement.dispatchEvent(new Event('input'));
     openPopup(popupProfile);
 }
