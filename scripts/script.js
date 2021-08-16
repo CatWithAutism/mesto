@@ -37,6 +37,7 @@ const popupProfileForm = popupProfile.querySelector('.popup__form');
 const popupPictureElement = popupPicture.querySelector('.popup__picture');
 const popupSubtitleElement = popupPicture.querySelector('.popup__subtitle');
 const popupAddPictureForm = popupAddPicture.querySelector('.popup__form');
+const pictureTemplate = document.querySelector('#pictureTemplate').content;
 
 //больше нигде не используется
 document.querySelectorAll('.popup__closing-button').forEach(t => {
@@ -57,20 +58,23 @@ drawPictures(...initialCards);
 
 function drawPictures(...args) {
     const pictures = document.querySelector('.pictures');
-    const pictureTemplate = document.querySelector('#pictureTemplate').content;
 
     args.forEach(t => {
-        const rawPictureElement = pictureTemplate.querySelector('.pictures__element').cloneNode(true);
-        const picture = rawPictureElement.querySelector('.pictures__picture');
-
-        picture.setAttribute('src', t.link);
-        picture.setAttribute('alt', t.name);
-        rawPictureElement.querySelector('.pictures__title').textContent = t.name;
-        rawPictureElement.querySelector('.pictures__like').addEventListener('click', onLike);
-        rawPictureElement.querySelector('.pictures__remove-button').addEventListener('click', onRemovePicture);
-        picture.addEventListener('click', onPictureClick);
-        pictures.prepend(rawPictureElement);
+        pictures.prepend(createCard({name: t.name, link: t.link}));
     });
+}
+
+function createCard(cardData){
+    const rawPictureElement = pictureTemplate.querySelector('.pictures__element').cloneNode(true);
+    const picture = rawPictureElement.querySelector('.pictures__picture');
+
+    picture.setAttribute('src', cardData.link);
+    picture.setAttribute('alt', cardData.name);
+    rawPictureElement.querySelector('.pictures__title').textContent = cardData.name;
+    rawPictureElement.querySelector('.pictures__like').addEventListener('click', onLike);
+    rawPictureElement.querySelector('.pictures__remove-button').addEventListener('click', onRemovePicture);
+    picture.addEventListener('click', onPictureClick);
+    return rawPictureElement;
 }
 
 function openPopup(popup) {
@@ -95,7 +99,6 @@ function onKeydown(evt) {
 };
 
 function onLike(event) {
-    event.preventDefault();
     const activeClass = 'pictures__like_active';
     if (event.target.classList.contains(activeClass)) {
         event.target.classList.remove(activeClass);
@@ -105,17 +108,14 @@ function onLike(event) {
 }
 
 function onClosePopup(event) {
-    event.preventDefault();
     closePopup(event.target.closest(".popup"));
 }
 
 function onRemovePicture(event) {
-    event.preventDefault();
     event.target.parentElement.remove();
 }
 
 function onAddPicture(event) {
-    event.preventDefault();
     openPopup(popupAddPicture);
 }
 
@@ -129,14 +129,15 @@ function onAddNewPictureSubmit(event) {
         link: addPictureUrlElement.value.trim()
     });
 
-    popupAddPictureForm.reset();
+    closePopup(popupAddPicture);
 
-    closePopup(popupAddPicture)
+    //чтобы подписка на ресет сработала правильно :(
+    addPictureTitleElement.value = '';
+    addPictureUrlElement.value = '';
+    popupAddPictureForm.reset();
 }
 
 function onPictureClick(event) {
-    event.preventDefault();
-
     const title = event.target.parentElement.querySelector('.pictures__title').textContent;
 
     popupPictureElement.setAttribute('src', event.target.getAttribute('src'));
@@ -154,8 +155,6 @@ function onProfileEditSubmit(event) {
 }
 
 function onEditProfileData(event) {
-    event.preventDefault();
-
     popupProfileNameElement.value = profileTitleElement.textContent;
     popupProfileTitleElement.value = profileSubTitleElement.textContent;
 

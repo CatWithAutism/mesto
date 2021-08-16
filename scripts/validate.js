@@ -17,7 +17,7 @@ function hideError(formElement, inputElement, data) {
 }
 
 function resolveButtonState(inputList, buttonElement, data) {
-
+    const s = inputList[0].value;
     if (inputList.every((t) => t.validity.valid)) {
         buttonElement.classList.remove(data.inactiveButtonClass);
         buttonElement.removeAttribute('disabled');
@@ -35,11 +35,6 @@ function validateInputField(formElement, inputElement, data) {
 function setEventListeners(formElement, data) {
     const submitButton = formElement.querySelector(data.submitButtonSelector);
     const inputFields = Array.from(formElement.querySelectorAll(data.inputSelector));
-
-    formElement.addEventListener("reset", () => {
-        resolveButtonState(inputFields, submitButton, data);
-    });
-
     //чтобы провалидировался до ввода чего либо
     resolveButtonState(inputFields, submitButton, data);
     inputFields.forEach(inputElement => {
@@ -47,6 +42,10 @@ function setEventListeners(formElement, data) {
             validateInputField(formElement, inputElement, data);
             resolveButtonState(inputFields, submitButton, data);
         });
+    });
+
+    formElement.addEventListener('reset', () => {
+        resolveButtonState(inputFields, submitButton, data);
     });
 }
 
