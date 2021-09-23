@@ -1,3 +1,5 @@
+import { FormValidator } from "./formValidator.js";
+
 export const initialCards = [{
     name: 'Архыз',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
@@ -37,3 +39,18 @@ export const popupProfileForm = popupProfile.querySelector('.popup__form');
 export const popupPictureElement = popupPicture.querySelector('.popup__picture');
 export const popupSubtitleElement = popupPicture.querySelector('.popup__subtitle');
 export const popupAddPictureForm = popupAddPicture.querySelector('.popup__form');
+export const addPictureTitleElement = popupAddPicture.querySelector('#pictureTitle');
+export const addPictureUrlElement = popupAddPicture.querySelector('#url');
+export const cardTemplateSelector = '#pictureTemplate';
+export const pictures = document.querySelector('.pictures');
+export const  validationConfig = {
+    formSelector: '.popup__form',
+    inputSelector: '.popup__input-field',
+    submitButtonSelector: '.popup__submit-button',
+    inactiveButtonClass: 'popup__submit-button_disabled',
+    inputErrorClass: 'popup__input-field_invalid',
+    errorClass: 'popup__error-message_active',
+};
+
+export const profileFormValidator = new FormValidator(validationConfig, popupProfileForm);
+export const addPictureFormValidator = new FormValidator(validationConfig, popupAddPictureForm);

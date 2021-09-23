@@ -1,5 +1,5 @@
 import * as consts from "./constants.js";
-import { drawPictures } from "./script.js";
+import { createCard, drawCard } from "./utils.js";
 
 export function openPopup(popup) {
     popup.classList.add('popup_opened');
@@ -32,19 +32,13 @@ export function onAddPicture(event) {
 
 export function onAddNewPictureSubmit(event) {
     event.preventDefault();
-    const addPictureTitleElement = consts.popupAddPicture.querySelector('#pictureTitle');
-    const addPictureUrlElement = consts.popupAddPicture.querySelector('#url');
-
-    drawPictures({
-        name: addPictureTitleElement.value.trim(),
-        link: addPictureUrlElement.value.trim()
-    });
+    drawCard(createCard(consts.addPictureTitleElement.value.trim(), consts.addPictureUrlElement.value.trim(), consts.cardTemplateSelector));
 
     closePopup(consts.popupAddPicture);
 
     //чтобы подписка на ресет сработала правильно :(
-    addPictureTitleElement.value = '';
-    addPictureUrlElement.value = '';
+    consts.addPictureTitleElement.value = '';
+    consts.addPictureUrlElement.value = '';
     consts.popupAddPictureForm.reset();
 }
 

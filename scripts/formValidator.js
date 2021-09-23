@@ -1,35 +1,37 @@
 export class FormValidator {
-    constructor(data, formElement) {
-        this._data = data;
+    constructor(validationConfig, formElement) {
+        this._validationConfig = validationConfig;
         this._formElement = formElement;
+        this._submitButton = formElement.querySelector(this._validationConfig.submitButtonSelector);
+        this._inputFields = Array.from(formElement.querySelectorAll(this._validationConfig.inputSelector));
     }
 
     _printError(formElement, inputElement, errorMessage) {
+        //Выборка сделана адаптивно для любого количества полей и работает на вызове евента. Куда-то это выносить смысла не вижу.
         const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
-
         errorElement.textContent = errorMessage;
-        errorElement.classList.add(this._data.errorClass);
+        errorElement.classList.add(this._validationConfig.errorClass);
 
-        inputElement.classList.add(this._data.inputErrorClass);
+        inputElement.classList.add(this._validationConfig.inputErrorClass);
     }
 
     _hideError(formElement, inputElement) {
+        //Выборка сделана адаптивно для любого количества полей и работает на вызове евента. Куда-то это выносить смысла не вижу.
         const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
-
-        errorElement.classList.remove(this._data.errorClass);
+        errorElement.classList.remove(this._validationConfig.errorClass);
         errorElement.textContent = '';
 
-        inputElement.classList.remove(this._data.inputErrorClass);
+        inputElement.classList.remove(this._validationConfig.inputErrorClass);
     }
 
     _resolveButtonState(inputList, buttonElement) {
         if (inputList.every((t) => t.validity.valid)) {
-            buttonElement.classList.remove(this._data.inactiveButtonClass);
+            buttonElement.classList.remove(this._validationConfig.inactiveButtonClass);
             buttonElement.removeAttribute('disabled');
             return;
         }
 
-        buttonElement.classList.add(this._data.inactiveButtonClass);
+        buttonElement.classList.add(this._validationConfig.inactiveButtonClass);
         buttonElement.setAttribute('disabled', true);
     }
 
@@ -38,18 +40,16 @@ export class FormValidator {
     }
 
     _setEventListeners(formElement) {
-        const submitButton = formElement.querySelector(this._data.submitButtonSelector);
-        const inputFields = Array.from(formElement.querySelectorAll(this._data.inputSelector));
-        this._resolveButtonState(inputFields, submitButton);
-        inputFields.forEach(inputElement => {
+        this._resolveButtonState(this._inputFields, this._submitButton);
+        this._inputFields.forEach(inputElement => {
             inputElement.addEventListener('input', () => {
-                this._validateInputField(formElement, inputElement, this._data);
-                this._resolveButtonState(inputFields, submitButton, this._data);
+                this._validateInputField(formElement, inputElement, this._validationConfig);
+                this._resolveButtonState(this._inputFields, this._submitButton, this._validationConfig);
             });
         });
 
         formElement.addEventListener('reset', () => {
-            this._resolveButtonState(inputFields, submitButton);
+            this._resolveButtonState(this._inputFields, this._submitButton);
         });
     }
 
