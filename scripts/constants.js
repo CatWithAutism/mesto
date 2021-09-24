@@ -1,5 +1,3 @@
-import { FormValidator } from "./formValidator.js";
-
 export const initialCards = [{
     name: 'Архыз',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
@@ -51,6 +49,3 @@ export const  validationConfig = {
     inputErrorClass: 'popup__input-field_invalid',
     errorClass: 'popup__error-message_active',
 };
-
-export const profileFormValidator = new FormValidator(validationConfig, popupProfileForm);
-export const addPictureFormValidator = new FormValidator(validationConfig, popupAddPictureForm);

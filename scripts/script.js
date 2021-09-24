@@ -1,6 +1,8 @@
 import * as consts from "./constants.js";
 import * as handlers from "./eventHandlers.js";
 import { createCard, drawCard } from "./utils.js";
+import { FormValidator } from "./formValidator.js";
+
 
 //больше нигде не используется
 document.querySelectorAll('.popup__closing-button').forEach(popupClosingButton => {
@@ -21,6 +23,9 @@ consts.initialCards.forEach(cardData => {
     drawCard(createCard(cardData.name, cardData.link, consts.cardTemplateSelector));
 });
 
-consts.profileFormValidator.enableValidation();
-consts.addPictureFormValidator.enableValidation();
+const profileFormValidator = new FormValidator(consts.validationConfig, consts.popupProfileForm);
+const addPictureFormValidator = new FormValidator(consts.validationConfig, consts.popupAddPictureForm);
+
+profileFormValidator.enableValidation();
+addPictureFormValidator.enableValidation();
 
