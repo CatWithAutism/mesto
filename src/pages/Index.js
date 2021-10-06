@@ -73,8 +73,8 @@ export function onAddNewPictureSubmit(event) {
     event.preventDefault();
     //я бы это переделал на getInpuvValues передав заботу о том что мы получаем на того, кто отправляет и того, кто принимает
     cardSection.addItem({
-        link: event.target.elements.url.value,
-        title: event.target.elements.pictureTitle.value,
+        link: event.target.elements.url.value.trim(),
+        title: event.target.elements.pictureTitle.value.trim(),
     }, methodOfAdding.PREPEND);
 
     popupAddPicture.close();
@@ -82,8 +82,10 @@ export function onAddNewPictureSubmit(event) {
 
 export function onProfileEditSubmit(event) {
     event.preventDefault();
-    consts.profileTitleElement.textContent = consts.popupProfileNameElement.value.trim();
-    consts.profileSubTitleElement.textContent = consts.popupProfileTitleElement.value.trim();
+    userInfo.setUserInfo({
+        name:  event.target.elements.name.value.trim(),
+        title: event.target.elements.title.value.trim(),
+    });
     popupProfile.close();
 }
 //#endregion

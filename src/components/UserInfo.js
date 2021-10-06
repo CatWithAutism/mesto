@@ -1,6 +1,6 @@
 export class UserInfo{
     constructor({ nicknameSelector, userPosSelector }){
-        this._nicknameElement     = document.querySelector(nicknameSelector);
+        this._nicknameElement = document.querySelector(nicknameSelector);
         this._userPosElement = document.querySelector(userPosSelector);
     }
 
@@ -12,7 +12,7 @@ export class UserInfo{
     }
 
     setUserInfo({ name, title }){
-        this._elementUserName.textContent = name;
-        this._elementUserPosition.textContent = title;
+        this._nicknameElement.textContent = name;
+        this._userPosElement.textContent = title;
     }
 }
