@@ -1,10 +1,11 @@
-import * as consts from "../constants/constants.js";
-import { createCard } from "../utils/utils.js";
-import { FormValidator } from "../components/formValidator.js";
-import { UserInfo } from "../components/userInfo.js";
-import { PopupWithImage } from "../components/popupWithImage.js";
-import { PopupWithForm } from "../components/popupWithForm.js";
-import { Section, methodOfAdding } from "../components/section.js";
+import * as consts from "./constants/constants.js";
+import { createCard } from "./utils/utils.js";
+import { FormValidator } from "./components/formValidator.js";
+import { UserInfo } from "./components/userInfo.js";
+import { PopupWithImage } from "./components/popupWithImage.js";
+import { PopupWithForm } from "./components/popupWithForm.js";
+import { Section, methodOfAdding } from "./components/section.js";
+import "./pages/index.css";
 
 const userInfo = new UserInfo({ 
     nicknameSelector: ".profile__title",
