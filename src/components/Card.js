@@ -1,11 +1,9 @@
-import { openPopup } from "./eventHandlers.js";
-import { popupPictureElement, popupSubtitleElement } from "./constants.js";
-
 export class Card {
-    constructor(data, templateSelector) {
-        this._name = data.name;
+    constructor(data, templateSelector, handleCardClick) {
+        this._title = data.title;
         this._link = data.link;
         this._templateSelector = templateSelector;
+        this._handleCardClick = handleCardClick;
     }
 
     _onLike(event) {
@@ -21,27 +19,17 @@ export class Card {
         event.target.parentElement.remove();
     }
 
-    _onPictureClick(event) {
-        const title = event.target.parentElement.querySelector('.pictures__title').textContent;
-
-        popupPictureElement.setAttribute('src', event.target.getAttribute('src'));
-        popupPictureElement.setAttribute('alt', title)
-        popupSubtitleElement.textContent = title;
-
-        openPopup(popupPicture);
-    }
-
     _cloneTemplate() {
         return document.querySelector(this._templateSelector).content.cloneNode(true);
     }
 
     _fillData(template) {
-        template.querySelector('.pictures__title').textContent = this._name;
+        template.querySelector('.pictures__title').textContent = this._title;
     }
 
     _fillPicture(picture) {
         picture.setAttribute('src', this._link);
-        picture.setAttribute('alt', this._name);
+        picture.setAttribute('alt', this._title);
     }
 
     _setEventListenersOnButtons(template) {
@@ -50,7 +38,7 @@ export class Card {
     }
 
     _setEventListenersOnPicture(picture) {
-        picture.addEventListener('click', this._onPictureClick);
+        picture.addEventListener('click', () => this._handleCardClick(this._title, this._link));
     }
 
     getCard() {
