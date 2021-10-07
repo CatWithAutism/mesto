@@ -1,10 +1,10 @@
-import * as consts from "./constants/constants.js";
-import { createCard } from "./utils/utils.js";
-import { FormValidator } from "./components/formValidator.js";
-import { UserInfo } from "./components/userInfo.js";
-import { PopupWithImage } from "./components/popupWithImage.js";
-import { PopupWithForm } from "./components/popupWithForm.js";
-import { Section, methodOfAdding } from "./components/section.js";
+import * as consts from "../constants/constants.js";
+import { createCard } from "../utils/utils.js";
+import { FormValidator } from "../components/formValidator.js";
+import { UserInfo } from "../components/userInfo.js";
+import { PopupWithImage } from "../components/popupWithImage.js";
+import { PopupWithForm } from "../components/popupWithForm.js";
+import { Section, methodOfAdding } from "../components/section.js";
 import "./pages/index.css";
 
 const userInfo = new UserInfo({ 
@@ -47,45 +47,24 @@ consts.addPictureButton.addEventListener('click', onAddPicture);
 //#endregion Buttons
 
 //#region Handlers
-export function onEditProfileData(event) {
-    consts.popupProfileNameElement.value = consts.profileTitleElement.textContent;
-    consts.popupProfileTitleElement.value = consts.profileSubTitleElement.textContent;
-
-    consts.popupProfileNameElement.dispatchEvent(new Event('input'));
-    consts.popupProfileTitleElement.dispatchEvent(new Event('input'));
-    popupProfile.open();
-}
-
-export function onPictureClick(event) {
-    const title = event.target.parentElement.querySelector('.pictures__title').textContent;
-
-    consts.popupPictureElement.setAttribute('src', event.target.getAttribute('src'));
-    consts.popupPictureElement.setAttribute('alt', title)
-    consts.popupSubtitleElement.textContent = title;
-
-    popupPicture.open();
-}
-
 export function onAddPicture(event) {
     popupAddPicture.open();
 }
 
-export function onAddNewPictureSubmit(event) {
-    event.preventDefault();
+export function onAddNewPictureSubmit(formData) {
     //я бы это переделал на getInpuvValues передав заботу о том что мы получаем на того, кто отправляет и того, кто принимает
     cardSection.addItem({
-        link: event.target.elements.url.value.trim(),
-        title: event.target.elements.pictureTitle.value.trim(),
+        link: formData.newUrl,
+        title: formData.newTitle,
     }, methodOfAdding.PREPEND);
 
     popupAddPicture.close();
 }
 
-export function onProfileEditSubmit(event) {
-    event.preventDefault();
+export function onProfileEditSubmit(formData) {
     userInfo.setUserInfo({
-        name:  event.target.elements.name.value.trim(),
-        title: event.target.elements.title.value.trim(),
+        name:  formData.newName,
+        title: formData.newTitle,
     });
     popupProfile.close();
 }
