@@ -5,7 +5,7 @@ import { UserInfo } from "../components/userInfo.js";
 import { PopupWithImage } from "../components/popupWithImage.js";
 import { PopupWithForm } from "../components/popupWithForm.js";
 import { Section, methodOfAdding } from "../components/section.js";
-import "./pages/index.css";
+import "./index.css";
 
 const userInfo = new UserInfo({ 
     nicknameSelector: ".profile__title",
