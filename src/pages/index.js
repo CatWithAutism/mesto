@@ -98,7 +98,7 @@ export function onAddNewPictureSubmit(formData) {
     };
     api.sendCard(newCardInfo)
         .then(result => {
-            cardSection.addItem(result, methodOfAdding.APPEND);
+            cardSection.addItem(result, methodOfAdding.PREPEND);
         })
         .catch(error => {
             handleError(error);
@@ -115,12 +115,12 @@ export function onProfileEditSubmit(formData) {
     }).then(result => {
         userInfo.setUserInfo(result);
     })
-    .catch(error => {
-        handleError(error);
-    })
-    .finally(() => {
-        popupProfile.close();
-    })
+        .catch(error => {
+            handleError(error);
+        })
+        .finally(() => {
+            popupProfile.close();
+        })
 }
 
 export function onRemovePicture(data) {
@@ -134,10 +134,10 @@ export function onRemovePicture(data) {
         .finally(() => {
             removingPicturePopup.close();
         })
-    
+
 }
 
-export function onLikePicture(id, isLiked, onSuccess){
+export function onLikePicture(id, isLiked, onSuccess) {
     api.updateLikeState(id, isLiked)
         .then(result => {
             onSuccess(result);
@@ -160,7 +160,7 @@ function renderCard(cardData) {
     return renderedCard.getCard();
 }
 
-function handleError(data){
+function handleError(data) {
     console.log(data);
 }
 //#endregion
