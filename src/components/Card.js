@@ -5,6 +5,7 @@ export class Card {
         this._id = data.id;
         this._likes = data.likes;
         this._isLiked = this._likes.some(like => like._id === userId);
+        this._isMine = data.ownerId === userId;
 
         this._templateSelector = templateSelector;
 
@@ -38,7 +39,9 @@ export class Card {
 
     _setEventListenersOnButtons(template) {
         template.querySelector('.pictures__like').addEventListener('click', () => this._handleCardLike(this._id, this._isLiked, this._onLike.bind(this)));
-        template.querySelector('.pictures__remove-button').addEventListener('click', (evt) => this._handleCardDelete({ evt: evt, id: this._id }));
+        if(this._isMine){
+            template.querySelector('.pictures__remove-button').addEventListener('click', (evt) => this._handleCardDelete({ evt: evt, id: this._id }));
+        }
     }
 
     _setEventListenersOnPicture(picture) {
@@ -47,6 +50,10 @@ export class Card {
 
     getCard() {
         const template = this._cloneTemplate();
+        if(!this._isMine){
+            template.querySelector('.pictures__remove-button').remove();
+        }
+
         const rawPictureElement = template.querySelector('.pictures__element');
         const picture = rawPictureElement.querySelector('.pictures__picture');
 

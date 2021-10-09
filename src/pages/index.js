@@ -98,8 +98,7 @@ export function onAddNewPictureSubmit(formData) {
     };
     api.sendCard(newCardInfo)
         .then(result => {
-            /* переделать */
-            cardSection.addItem(newCardInfo, methodOfAdding.PREPEND);
+            cardSection.addItem(result, methodOfAdding.APPEND);
         })
         .catch(error => {
             handleError(error);
