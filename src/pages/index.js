@@ -60,7 +60,7 @@ const userInfo = new UserInfo({
 Promise.all([api.getUserInfo(), api.getCards()])
     .then(([resultGetUserInfo, resultGetCards]) => {
         userInfo.setUserInfo(resultGetUserInfo);
-        cardSection.addItems(resultGetCards, methodOfAdding.APPEND);
+        cardSection.addItems(resultGetCards.reverse(), methodOfAdding.PREPEND);
     });
 
 //#region Buttons
