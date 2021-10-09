@@ -7,6 +7,7 @@
 CSS
 HTML
 Javascript
+Webpack && Additional Plugins
 
 ### GitHub Pages
 https://catwithautism.github.io/mesto/
