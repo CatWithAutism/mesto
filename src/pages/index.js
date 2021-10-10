@@ -83,15 +83,22 @@ consts.profileAvatarElement.addEventListener('click', () => {
 
 //#region Handlers
 export function onUpdatePictureSubmit(formData) {
+    updateProfilePicturePopup.disableSubmit();
     api.updateUserAvatar(formData.newAvatar)
         .then(result => {
             userInfo.setUserInfo(result);
+            updateProfilePicturePopup.close();
         })
-        .catch(error => handleError(error))
-        .finally(updateProfilePicturePopup.close())
+        .catch(error => {
+            handleError(error);
+        })
+        .finally(() => {
+            updateProfilePicturePopup.enableSubmit();
+        });
 }
 
 export function onAddNewPictureSubmit(formData) {
+    popupAddPicture.disableSubmit();
     const newCardInfo = {
         name: formData.newTitle,
         link: formData.newUrl,
@@ -99,42 +106,42 @@ export function onAddNewPictureSubmit(formData) {
     api.sendCard(newCardInfo)
         .then(result => {
             cardSection.addItem(result, methodOfAdding.PREPEND);
+            popupAddPicture.close();
         })
         .catch(error => {
             handleError(error);
         })
         .finally(() => {
-            popupAddPicture.close();
-        })
+            popupAddPicture.enableSubmit();
+        });
 }
 
 export function onProfileEditSubmit(formData) {
+    popupProfile.disableSubmit();
     api.updateUserInfo({
         name: formData.newName,
         about: formData.newTitle,
-    }).then(result => {
-        userInfo.setUserInfo(result);
-    })
+        }).then(result => {
+            userInfo.setUserInfo(result);
+            popupProfile.close();
+        })
         .catch(error => {
             handleError(error);
         })
         .finally(() => {
-            popupProfile.close();
-        })
+            popupProfile.enableSubmit();
+        });
 }
 
 export function onRemovePicture(data) {
     api.deleteCard(data.id)
         .then(result => {
             data.evt.target.parentElement.remove();
+            removingPicturePopup.close();
         })
         .catch(error => {
             handleError(error);
-        })
-        .finally(() => {
-            removingPicturePopup.close();
-        })
-
+        });
 }
 
 export function onLikePicture(id, isLiked, onSuccess) {
