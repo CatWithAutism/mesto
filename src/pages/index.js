@@ -61,8 +61,7 @@ Promise.all([api.getUserInfo(), api.getCards()])
     .then(([resultGetUserInfo, resultGetCards]) => {
         userInfo.setUserInfo(resultGetUserInfo);
         cardSection.addItems(resultGetCards.reverse(), methodOfAdding.PREPEND);
-    })
-    .catch(handleError);
+    });
 
 //#region Buttons
 consts.editProfileDataButton.addEventListener('click', () => {
@@ -88,8 +87,8 @@ export function onUpdatePictureSubmit(formData) {
         .then(result => {
             userInfo.setUserInfo(result);
         })
-        .catch(handleError)
-        .finally(updateProfilePicturePopup.close)
+        .catch(error => handleError(error))
+        .finally(updateProfilePicturePopup.close())
 }
 
 export function onAddNewPictureSubmit(formData) {
@@ -101,20 +100,27 @@ export function onAddNewPictureSubmit(formData) {
         .then(result => {
             cardSection.addItem(result, methodOfAdding.PREPEND);
         })
-        .catch(handleError)
-        .finally(popupAddPicture.close);
+        .catch(error => {
+            handleError(error);
+        })
+        .finally(() => {
+            popupAddPicture.close();
+        })
 }
 
 export function onProfileEditSubmit(formData) {
     api.updateUserInfo({
         name: formData.newName,
         about: formData.newTitle,
+    }).then(result => {
+        userInfo.setUserInfo(result);
     })
-        .then(result => {
-            userInfo.setUserInfo(result);
+        .catch(error => {
+            handleError(error);
         })
-        .catch(handleError)
-        .finally(popupProfile.close());
+        .finally(() => {
+            popupProfile.close();
+        })
 }
 
 export function onRemovePicture(data) {
@@ -122,8 +128,12 @@ export function onRemovePicture(data) {
         .then(result => {
             data.evt.target.parentElement.remove();
         })
-        .catch(handleError)
-        .finally(removingPicturePopup.close);
+        .catch(error => {
+            handleError(error);
+        })
+        .finally(() => {
+            removingPicturePopup.close();
+        })
 
 }
 
@@ -132,7 +142,9 @@ export function onLikePicture(id, isLiked, onSuccess) {
         .then(result => {
             onSuccess(result);
         })
-        .catch(handleError);
+        .catch(error => {
+            handleError(error);
+        });
 }
 //#endregion
 
