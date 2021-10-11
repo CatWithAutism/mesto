@@ -11,10 +11,6 @@ export class PopupWithForm extends Popup{
         this._submitText = this._submitButton.textContent;
     }
 
-    open(){
-        super.open();
-    }
-
     close(){
         this._popupForm.reset();
         super.close();
@@ -42,8 +38,6 @@ export class PopupWithForm extends Popup{
             if(this._onSubmitFunc){
                 this._onSubmitFunc(this._getInputValues());
             }
-
-            this.close();
         });
     }
 

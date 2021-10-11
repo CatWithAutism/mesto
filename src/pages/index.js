@@ -1,5 +1,4 @@
 import * as consts from "../utils/Constants.js";
-import { createCard } from "../utils/Utils.js";
 import { FormValidator } from "../components/FormValidator.js";
 import { UserInfo } from "../components/UserInfo.js";
 import { PopupWithImage } from "../components/PopupWithImage.js";
@@ -7,6 +6,7 @@ import { PopupWithForm } from "../components/PopupWithForm.js";
 import { Section, methodOfAdding } from "../components/Section.js";
 import { PopupWithButton } from "../components/PopupWithButton.js";
 import { Api } from "../components/Api.js";
+import { Card } from "../components/Card.js";
 import "./index.css";
 
 const api = new Api({
@@ -61,22 +61,23 @@ Promise.all([api.getUserInfo(), api.getCards()])
     .then(([resultGetUserInfo, resultGetCards]) => {
         userInfo.setUserInfo(resultGetUserInfo);
         cardSection.addItems(resultGetCards.reverse(), methodOfAdding.PREPEND);
-    });
+    })
+    .catch(handleError);
 
 //#region Buttons
 consts.editProfileDataButton.addEventListener('click', () => {
     popupProfile.setValues(userInfo.getUserInfo());
-
-    consts.popupProfileNameElement.dispatchEvent(new Event('input'));
-    consts.popupProfileTitleElement.dispatchEvent(new Event('input'));
+    profileFormValidator.resetValidation();
     popupProfile.open();
 });
 
 consts.addPictureButton.addEventListener('click', () => {
+    addPictureFormValidator.resetValidation();
     popupAddPicture.open();
 });
 
 consts.profileAvatarElement.addEventListener('click', () => {
+    updateProfileValidator.resetValidation();
     updateProfilePicturePopup.open();
 });
 //#endregion Buttons
@@ -134,6 +135,7 @@ export function onProfileEditSubmit(formData) {
 }
 
 export function onRemovePicture(data) {
+    removingPicturePopup.disableSubmit();
     api.deleteCard(data.id)
         .then(result => {
             data.evt.target.parentElement.remove();
@@ -141,6 +143,9 @@ export function onRemovePicture(data) {
         })
         .catch(error => {
             handleError(error);
+        })
+        .finally(() => {
+            removingPicturePopup.enableSubmit();
         });
 }
 
@@ -170,4 +175,8 @@ function renderCard(cardData) {
 function handleError(data) {
     console.log(data);
 }
+
+export function createCard(cardData, userId, selector, clickHandler, deleteCardHandler, onLikeCard){
+    return new Card({ title: cardData.name, link: cardData.link, likes: cardData.likes, id:cardData._id, ownerId:cardData.owner._id}, userId, selector, clickHandler, deleteCardHandler, onLikeCard)
+} 
 //#endregion

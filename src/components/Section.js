@@ -6,7 +6,7 @@ export const methodOfAdding = {
 export class Section{
     constructor(renderer, containerSelector){
         this._renderer = renderer;
-        this._container = document.querySelector(containerSelector, methodOfAdding.APPEND);
+        this._container = document.querySelector(containerSelector);
     }
 
     addItem(item, method){
@@ -15,7 +15,7 @@ export class Section{
 
     addItems(items, method){
         items.forEach(item => {
-            this._container[method](this._renderer(item));
+            this.addItem(item, method);
         })
     }
 }
