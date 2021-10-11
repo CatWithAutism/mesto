@@ -11,7 +11,7 @@ export class Section{
 
     addItem(item, method){
         this._container[method](this._renderer(item));
-    }
+    } 
 
     addItems(items, method){
         items.forEach(item => {

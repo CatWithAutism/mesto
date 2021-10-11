@@ -13,7 +13,7 @@ export class FormValidator {
         errorElement.classList.add(this._validationConfig.errorClass);
 
         inputElement.classList.add(this._validationConfig.inputErrorClass);
-    }
+    }  
 
     _hideError(inputElement) {
         //Выборка сделана адаптивно для любого количества полей и работает на вызове евента. Куда-то это выносить смысла не вижу.

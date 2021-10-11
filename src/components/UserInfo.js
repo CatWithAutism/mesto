@@ -12,7 +12,7 @@ export class UserInfo{
             avatar: this._avatarElement.getAttribute("src"),
             id: this._id,
         }
-    }
+    } 
 
     setUserInfo({ name, about, avatar, _id}){
         this._nicknameElement.textContent = name;

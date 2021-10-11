@@ -1,12 +1,12 @@
-import * as consts from "../constants/constants.js";
-import { createCard } from "../utils/utils.js";
-import { FormValidator } from "../components/formValidator.js";
-import { UserInfo } from "../components/userInfo.js";
-import { PopupWithImage } from "../components/popupWithImage.js";
-import { PopupWithForm } from "../components/popupWithForm.js";
-import { Section, methodOfAdding } from "../components/section.js";
-import { PopupWithButton } from "../components/popupWithButton.js";
-import { Api } from "../components/api.js";
+import * as consts from "../utils/Constants.js";
+import { createCard } from "../utils/Utils.js";
+import { FormValidator } from "../components/FormValidator.js";
+import { UserInfo } from "../components/UserInfo.js";
+import { PopupWithImage } from "../components/PopupWithImage.js";
+import { PopupWithForm } from "../components/PopupWithForm.js";
+import { Section, methodOfAdding } from "../components/Section.js";
+import { PopupWithButton } from "../components/PopupWithButton.js";
+import { Api } from "../components/Api.js";
 import "./index.css";
 
 const api = new Api({
@@ -36,7 +36,7 @@ updateProfileValidator.enableValidation();
 //#endregion
 
 //#region InitForms
-const popupProfile = new PopupWithForm("#popupProfile", onProfileEditSubmit)
+const popupProfile = new PopupWithForm("#popupProfile", onProfileEditSubmit);
 popupProfile.setEventListeners();
 const profileFormValidator = new FormValidator(consts.validationConfig, popupProfile.getForm());
 profileFormValidator.enableValidation();

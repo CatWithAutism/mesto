@@ -3,7 +3,7 @@ export class Api {
     constructor(options) {
         this._headers = options.headers;
         this._baseUrl = options.baseUrl;
-    }
+    } 
 
     //#region Common
     _getDeserializedJsonObject(url, queryParams = {}) {
@@ -72,4 +72,4 @@ export class Api {
     }
     //#endregion
 
-}
+} 

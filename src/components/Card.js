@@ -46,7 +46,7 @@ export class Card {
 
     _setEventListenersOnPicture(picture) {
         picture.addEventListener('click', () => this._handleCardClick(this._title, this._link));
-    }
+    } 
 
     getCard() {
         const template = this._cloneTemplate();

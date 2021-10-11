@@ -1,4 +1,4 @@
-import Popup from "./popup.js";
+import Popup from "./Popup.js";
 
 export class PopupWithButton extends Popup {
 
@@ -13,7 +13,7 @@ export class PopupWithButton extends Popup {
     open(event) {
         this._lastEvent = event;
         super.open();
-    }
+    } 
 
     setEventListeners() {
         super.setEventListeners();
