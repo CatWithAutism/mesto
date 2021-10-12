@@ -9,6 +9,17 @@ import { Api } from "../components/Api.js";
 import { Card } from "../components/Card.js";
 import "./index.css";
 
+/*
+
+Не знаю в чем причина
+То ли гит на Винде 11 с ума сходит
+То ли у меня крыша едет :)
+Я закоммитил еще все после первого ревью
+А это как-то кусками произошло
+Причем изменения старше не улетели, а младше улетели
+
+*/
+
 const api = new Api({
     baseUrl: "https://mesto.nomoreparties.co/v1/cohort-28",
     headers: {
